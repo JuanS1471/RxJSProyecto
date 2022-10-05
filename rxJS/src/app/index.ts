@@ -1,5 +1,25 @@
 import { Observable, Observer } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
+
+const myObservable = new Observable((subscriber) => {
+  subscriber.next('HOLA');
+  subscriber.next(10);
+  subscriber.next(20);
+  subscriber.error('error');
+});
+const myObservable2 = new Observable((subscriber) => {
+  subscriber.complete();
+});
+
+
+//myObservable.subscribe(myObserver);
+const mpipe = myObservable.pipe(
+  filter((r: any) => !isNaN(r)),
+  map((r: any) => {
+    return r + 10;
+  })
+);
+
 const myObserver: Observer<any> = {
   next: (x) => {
     if (!isNaN(x)) {
@@ -12,22 +32,5 @@ const myObserver: Observer<any> = {
   complete: () => console.log('mi trabajo aqui esta realizado'),
 };
 
-const myObservable = new Observable((subscriber) => {
-  subscriber.next('HOLA');
-  subscriber.next(10);
-  subscriber.next(20);
-  subscriber.error('error');
-});
-const myObservable2 = new Observable((subscriber) => {
-  subscriber.complete();
-});
-
-//myObservable.subscribe(myObserver);
-const mpipe = myObservable.pipe(
-  filter((r: any) => !isNaN(r)),
-  map((r: any) => {
-    return r + 10;
-  })
-);
 
 mpipe.subscribe(myObserver);
