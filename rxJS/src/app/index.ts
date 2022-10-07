@@ -1,5 +1,5 @@
-import { Observable, Observer } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
+import { Observable, Observer, of } from 'rxjs';
+import { map, filter, delay, scan, tap } from 'rxjs/operators';
 
 const myObservable = new Observable((subscriber) => {
   subscriber.next('HOLA');
@@ -32,5 +32,13 @@ const myObserver: Observer<any> = {
   complete: () => console.log('mi trabajo aqui esta realizado'),
 };
 
+const source = of("wordl").pipe(
+  map(x => `hello ${x}`),
+  tap(ev => console.log(ev + "asd")),
+  delay(5000),
+  scan((acc, one) => acc + one, "Prueba"),
+  filter(x => x.includes("hola"))
+);
+source.subscribe()
 
 mpipe.subscribe(myObserver);
