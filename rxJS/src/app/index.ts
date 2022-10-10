@@ -1,4 +1,4 @@
-import { Observable, Observer, of } from 'rxjs';
+import { Observable, Observer, of, pipe } from 'rxjs';
 import { map, filter, delay, scan, tap } from 'rxjs/operators';
 
 const myObservable = new Observable((subscriber) => {
@@ -10,7 +10,6 @@ const myObservable = new Observable((subscriber) => {
 const myObservable2 = new Observable((subscriber) => {
   subscriber.complete();
 });
-
 
 //myObservable.subscribe(myObserver);
 const mpipe = myObservable.pipe(
@@ -28,17 +27,36 @@ const myObserver: Observer<any> = {
       console.log(`'${x}': no es un numero`);
     }
   },
-  error: (err) => console.error(`ERROR`, err),
+  error: (err) => console.error(err),
   complete: () => console.log('mi trabajo aqui esta realizado'),
 };
 
-const source = of("wordl").pipe(
-  map(x => `hello ${x}`),
-  tap(ev => console.log(ev + "asd")),
-  delay(5000),
-  scan((acc, one) => acc + one, "Prueba"),
-  filter(x => x.includes("hola"))
-);
-source.subscribe()
+const toggle = () =>
+  pipe(
+    scan((acc, value: any) => {
+      const newValue = value.a;
+      if (newValue % 2 === 0) {
+        acc.push(newValue);
+      }
+      return acc;
+    }, []),
+    tap((v) => console.log(v))
+  );
 
+const fakeData = [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }];
+
+const source2 = of(...fakeData).pipe(
+  toggle(),
+  map((x) => `Hello ${x.a}!`)
+);
+
+const source = of('wordl').pipe(
+  map((x) => `hello ${x}`),
+  tap((ev) => console.log(ev + 'asd')),
+  delay(5000),
+  scan((acc, one) => acc + one, 'Prueba'),
+  filter((x) => x.includes('hola'))
+);
+source.subscribe();
+source2.subscribe(console.log);
 mpipe.subscribe(myObserver);
