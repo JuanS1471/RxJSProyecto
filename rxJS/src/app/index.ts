@@ -1,5 +1,7 @@
 import { Observable, Observer, of, pipe } from 'rxjs';
-import { map, filter, delay, scan, tap } from 'rxjs/operators';
+import { map, filter, delay, scan, tap, mergeMap } from 'rxjs/operators';
+import {ajax} from 'rxjs/ajax'
+import { fromEvent } from 'rxjs';
 
 const myObservable = new Observable((subscriber) => {
   subscriber.next('HOLA');
@@ -60,3 +62,21 @@ const source = of('wordl').pipe(
 source.subscribe();
 source2.subscribe(console.log);
 mpipe.subscribe(myObserver);
+///////////////////////////////////////////
+const API_URL = 'https://rickandmortyapi.com/api/character/1';
+
+const click$ = fromEvent(document, 'click');
+
+click$
+  .pipe(
+    map((data) => {
+      if (data.isTrusted) {
+        return 10;
+      }
+    }),
+    mergeMap((id) => ajax.getJSON(`${API_URL}${id}`)),
+    map((data: any) => {
+      return `Estado: ${data.status}`;
+    })
+  )
+  .subscribe(console.log);
