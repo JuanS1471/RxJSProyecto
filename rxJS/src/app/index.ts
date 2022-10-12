@@ -1,5 +1,5 @@
-import { Observable, Observer, of, pipe } from 'rxjs';
-import { map, filter, delay, scan, tap, mergeMap } from 'rxjs/operators';
+import { interval, Observable, Observer, of, pipe } from 'rxjs';
+import { map, filter, delay, scan, tap, mergeMap, skipUntil, shareReplay } from 'rxjs/operators';
 import {ajax} from 'rxjs/ajax'
 import { fromEvent } from 'rxjs';
 
@@ -80,3 +80,17 @@ click$
     })
   )
   .subscribe(console.log);
+///////////////////////////////////////////////////////
+const interval$ = interval(1000);
+const clicks = fromEvent(document, 'click');
+
+const emitAftCLic = interval$.pipe(skipUntil(clicks));
+
+emitAftCLic.subscribe((v) => console.log(v));
+
+const emtAndShare = interval$.pipe(shareReplay());
+emtAndShare.subscribe((v) => console.log('share replay1: ' + v));
+
+clicks.subscribe(() => {
+  emtAndShare.subscribe((v) => console.log('share replay2: ' + v));
+});
