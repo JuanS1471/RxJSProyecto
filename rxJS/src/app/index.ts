@@ -1,5 +1,5 @@
 import { interval, Observable, Observer, of, pipe } from 'rxjs';
-import { map, filter, delay, scan, tap, mergeMap, skipUntil, shareReplay } from 'rxjs/operators';
+import { map, filter, delay, scan, tap, mergeMap, skipUntil, shareReplay, catchError } from 'rxjs/operators';
 import {ajax} from 'rxjs/ajax'
 import { fromEvent } from 'rxjs';
 
@@ -94,3 +94,21 @@ emtAndShare.subscribe((v) => console.log('share replay1: ' + v));
 clicks.subscribe(() => {
   emtAndShare.subscribe((v) => console.log('share replay2: ' + v));
 });
+////////////////////////////////////////////////////////
+
+of('bien', 'bien2', 'mal')
+  .pipe(
+    map((v) => {
+      if (v === 'mal') {
+        throw 'mal saludo';
+      }
+      return v;
+    }),
+    catchError((err) => {
+      throw 'error: ' + err;
+    })
+  )
+  .subscribe(
+    (X) => console.log(X),
+    (err) => console.error('ERROR: ' + err)
+  );
