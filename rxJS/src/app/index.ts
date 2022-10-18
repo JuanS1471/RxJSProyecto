@@ -1,4 +1,4 @@
-import { interval, Observable, Observer, of, pipe } from 'rxjs';
+import { interval, Observable, Observer, of, pipe, ReplaySubject } from 'rxjs';
 import { map, filter, delay, scan, tap, mergeMap, skipUntil, shareReplay, catchError } from 'rxjs/operators';
 import {ajax} from 'rxjs/ajax'
 import { fromEvent } from 'rxjs';
@@ -112,3 +112,11 @@ of('bien', 'bien2', 'mal')
     (X) => console.log(X),
     (err) => console.error('ERROR: ' + err)
   );
+
+///////////////////////////////////////////////////////
+
+const saludo = new ReplaySubject();
+
+of(1, 2, 3, 4, 5, 6).subscribe((v) => saludo.next(`${v}`));
+
+saludo.subscribe((x) => console.log('primera', x));
