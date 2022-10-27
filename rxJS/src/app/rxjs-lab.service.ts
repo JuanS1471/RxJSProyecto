@@ -62,10 +62,8 @@ export class RxjsLabService {
     delay(5000),
     scan((acc, one) => acc + one, 'Prueba'),
     filter((x) => x.includes('hola'))
-  );
-  this.source.subscribe();
-  this.source2.subscribe(console.log);
-  this.mpipe.subscribe(this.myObserver);
+  )
+  ///////////////////////////////////////////
   ///////////////////////////////////////////
   const API_URL = 'https://rickandmortyapi.com/api/character/1';
   
@@ -127,7 +125,7 @@ export class RxjsLabService {
   saludo.subscribe((x) => console.log('primera', x));
   
   
-  //
+  ////////////////////////////////////////////////////
   const saludo2 = new BehaviorSubject('');
   
   of(1, 2, 3, 4, 5, 6).subscribe((v) => saludo.next(`${v}`));
