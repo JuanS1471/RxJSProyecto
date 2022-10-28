@@ -68,68 +68,33 @@ export class RxjsLabService {
   const API_URL = 'https://rickandmortyapi.com/api/character/1';
   
   const click$ = fromEvent(document, 'click');
-  
-  click$
-    .pipe(
-      map(data => {
-        if (data.isTrusted) {
-          return 10;
-        }
-      }),
-      mergeMap((id) => $.getJSON(`${API_URL}${id}`)),
 
-      map((data: any) => {
-        return `Estado: ${data.status}`;
-      })
-    )
-    .subscribe(console.log);
   ///////////////////////////////////////////////////////
   const interval$ = interval(1000);
   const clicks = fromEvent(document, 'click');
   
-  const emitAftCLic = interval$.pipe(skipUntil(clicks));
+  const emitAftCLic = this.interval$.pipe(skipUntil(clicks));
   
-  emitAftCLic.subscribe((v) => console.log(v));
   
-  const emtAndShare = interval$.pipe(shareReplay());
-  emtAndShare.subscribe((v) => console.log('share replay1: ' + v));
+  const emtAndShare = this.interval$.pipe(shareReplay());
   
-  clicks.subscribe(() => {
-    emtAndShare.subscribe((v) => console.log('share replay2: ' + v));
-  });
   ////////////////////////////////////////////////////////
   
-  of('bien', 'bien2', 'mal')
-    .pipe(
-      map((v) => {
-        if (v === 'mal') {
-          throw 'mal saludo';
-        }
-        return v;
-      }),
-      catchError((err) => {
-        throw 'error: ' + err;
-      })
-    )
-    .subscribe(
-      (X) => console.log(X),
-      (err) => console.error('ERROR: ' + err)
-    );
-  
-  ///////////////////////////////////////////////////////
-  
-  const saludo = new ReplaySubject();
-  
-  of(1, 2, 3, 4, 5, 6).subscribe((v) => saludo.next(`${v}`));
-  
-  saludo.subscribe((x) => console.log('primera', x));
-  
-  
-  ////////////////////////////////////////////////////
-  const saludo2 = new BehaviorSubject('');
-  
-  of(1, 2, 3, 4, 5, 6).subscribe((v) => saludo.next(`${v}`));
-  
-  saludo2.subscribe((x) => console.log('primera', x));
-  
+  // of('bien', 'bien2', 'mal')
+  //   .pipe(
+  //     map((v) => {
+  //       if (v === 'mal') {
+  //         throw 'mal saludo';
+  //       }
+  //       return v;
+  //     }),
+  //     catchError((err) => {
+  //       throw 'error: ' + err;
+  //     })
+  //   )
+  //   .subscribe(
+  //     (X) => console.log(X),
+  //     (err) => console.error('ERROR: ' + err)
+  //   );
+
 }
