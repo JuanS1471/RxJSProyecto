@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Observable, filter, map, Observer, pipe, scan, tap, of, delay, fromEvent, mergeMap, interval, skipUntil, shareReplay, catchError, ReplaySubject, BehaviorSubject } from 'rxjs';
-import * from 'jquery';
 @Injectable({
   providedIn: 'root'
 })
 export class RxjsLabService {
 
   constructor() { }
-  const myObservable = new Observable((subscriber) => {
+  myObservable = new Observable((subscriber) => {
     subscriber.next('HOLA');
     subscriber.next(10);
     subscriber.next(20);
     subscriber.error('error');
   });
-  const myObservable2 = new Observable((subscriber) => {
+  myObservable2 = new Observable((subscriber) => {
     subscriber.complete();
   });
   
   //myObservable.subscribe(myObserver);
-  const mpipe = this.myObservable.pipe(
+  mpipe = this.myObservable.pipe(
     filter((r: any) => !isNaN(r)),
     map((r: any) => {
       return r + 10;
@@ -37,22 +36,21 @@ export class RxjsLabService {
     complete: () => console.log('mi trabajo aqui esta realizado'),
   };
   
-  toggle = () =>
-    pipe(
-      scan((acc, value: any) => {
-        const newValue = value.a;
-        if (newValue % 2 === 0) {
-          acc.push(newValue);
-        }
-        return acc;
-      }, []),
-      tap((v) => console.log(v))
-    );
+  // toggle = () =>
+  //   pipe(
+  //     scan((acc, value: any) => {
+  //       const newValue = value.a;
+  //       if (newValue % 2 === 0) {
+  //         acc.push(newValue);
+  //       }
+  //       return acc;
+  //     }, []),
+  //     tap((v) => console.log(v))
+  //   );
   
   fakeData = [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }];
   
   source2 = of(...this.fakeData).pipe(
-    this.toggle(),
     map((x) => `Hello ${x.a}!`)
   );
   
@@ -65,18 +63,18 @@ export class RxjsLabService {
   )
   ///////////////////////////////////////////
   ///////////////////////////////////////////
-  const API_URL = 'https://rickandmortyapi.com/api/character/1';
+  API_URL = 'https://rickandmortyapi.com/api/character/1';
   
-  const click$ = fromEvent(document, 'click');
+  click$ = fromEvent(document, 'click');
 
   ///////////////////////////////////////////////////////
-  const interval$ = interval(1000);
-  const clicks = fromEvent(document, 'click');
+  interval$ = interval(1000);
+  clicks = fromEvent(document, 'click');
   
-  const emitAftCLic = this.interval$.pipe(skipUntil(clicks));
+  emitAftCLic = this.interval$.pipe(skipUntil(this.clicks));
   
   
-  const emtAndShare = this.interval$.pipe(shareReplay());
+  emtAndShare = this.interval$.pipe(shareReplay());
   
   ////////////////////////////////////////////////////////
   
