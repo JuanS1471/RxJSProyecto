@@ -14,7 +14,16 @@ export class AppComponent {
   }
 
 
-  funcion(){
+  pipesFuncion(){
+    this.rxjsService.source.subscribe()
+  }
+  commonFuncion(){
+    this.rxjsService.source.subscribe()
+  }
+  shareFuncion(){
+    this.rxjsService.source.subscribe()
+  }
+  behaviorFuncion(){
     this.rxjsService.source.subscribe()
   }
 
