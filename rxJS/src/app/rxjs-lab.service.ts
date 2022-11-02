@@ -75,7 +75,11 @@ export class RxjsLabService {
   
   
   emtAndShare = this.interval$.pipe(shareReplay());
-  
+
+  /////////////////////////////////////
+ 
+  of(1,1,1,1,1)
+
   ////////////////////////////////////////////////////////
   
   // of('bien', 'bien2', 'mal')

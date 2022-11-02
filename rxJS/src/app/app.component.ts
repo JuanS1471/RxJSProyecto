@@ -18,9 +18,9 @@ export class AppComponent {
     this.rxjsService.source.subscribe()
   }
   commonFuncion(){
-    this.rxjsService.source.subscribe()
+    this.rxjsService.myObservable.subscribe()
   }
-  shareFuncion(){
+  replayFuncion(){
     this.rxjsService.source.subscribe()
   }
   behaviorFuncion(){
