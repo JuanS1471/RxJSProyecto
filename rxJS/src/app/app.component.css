@@ -1,12 +1,14 @@
 .buttonStyle{
     padding: 10px;
-    background-color: cornflowerblue;
+    background-color: #0D1B9F;
     color: white;
     border: 0;
     border-radius: 5px;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .buttonStyle:hover{
-    background-color: #5175b5;
+    background-color: #1121b5;
+    scale: 1.03;
 }
